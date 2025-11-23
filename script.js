@@ -88,79 +88,48 @@ function calculate() {
 }
 
 function getBoxInfo(qty) {
-    if (!qty || qty <= 0) return [];
+    if (!qty || qty <= 0) return { consolidated: [], details: [] };
 
     const boxes = [];
     let remaining = qty;
 
-    // Logic:
-    // 31-60: Purple (Max 60 per box?) - User said "31 to 60 is Purple"
-    // 13-30: Pink
-    // 1-12: One Touch
-
-    // The user requirement is slightly ambiguous on how to split large numbers.
-    // "31 to 60 is Purple, 13 to 30 is Pink..."
-    // Usually this implies box capacity.
-    // Let's assume we fill largest boxes first.
-
-    // However, the user prompt says:
-    // "31 to 60 is 'Purple', 13 to 30 is 'Pink', 1 to 12 is 'One Touch'"
-    // This sounds like a mapping for a SINGLE box if the quantity falls in that range.
-    // But what if quantity is 100?
-    // Usually shipment packing fills standard boxes.
-    // Let's assume standard max capacities: Purple=60, Pink=30, OneTouch=12.
-
     while (remaining > 0) {
         if (remaining >= 31) {
-            // Use Purple
-            // But wait, if we have 70? 60 (Purple) + 10 (OneTouch)?
-            // Or is it just a label for the range?
-            // "Box count and stickers... 31-60 is Purple..."
-            // I will implement a greedy fill strategy with these capacities.
-            // Purple capacity: 60
-            // Pink capacity: 30
-            // OneTouch capacity: 12
-
-            // Actually, let's look at the ranges again.
-            // If I have 40 -> 1 Purple.
-            // If I have 20 -> 1 Pink.
-            // If I have 10 -> 1 OneTouch.
-
-            // What if I have 90? (Gamagori base)
-            // 60 (Purple) + 30 (Pink)?
-
-            // Let's try to fill with Purple (60) first.
             if (remaining > 30) {
-                boxes.push({ type: '紫', color: 'box-purple', count: 1 });
-                remaining -= 60; // Assume full box is up to 60
+                const amount = Math.min(remaining, 60);
+                boxes.push({ type: '紫', color: 'box-purple', amount: amount });
+                remaining -= amount;
             } else if (remaining > 12) {
-                boxes.push({ type: 'ピンク', color: 'box-pink', count: 1 });
-                remaining -= 30;
+                const amount = Math.min(remaining, 30);
+                boxes.push({ type: 'ピンク', color: 'box-pink', amount: amount });
+                remaining -= amount;
             } else {
-                boxes.push({ type: 'ワンタッチ', color: 'box-onetouch', count: 1 });
-                remaining -= 12;
+                const amount = Math.min(remaining, 12);
+                boxes.push({ type: 'ワンタッチ', color: 'box-onetouch', amount: amount });
+                remaining -= amount;
             }
         } else if (remaining >= 13) {
-            boxes.push({ type: 'ピンク', color: 'box-pink', count: 1 });
-            remaining -= 30;
+            const amount = Math.min(remaining, 30);
+            boxes.push({ type: 'ピンク', color: 'box-pink', amount: amount });
+            remaining -= amount;
         } else {
-            boxes.push({ type: 'ワンタッチ', color: 'box-onetouch', count: 1 });
-            remaining -= 12;
+            const amount = Math.min(remaining, 12);
+            boxes.push({ type: 'ワンタッチ', color: 'box-onetouch', amount: amount });
+            remaining -= amount;
         }
 
-        // Safety break for negative remaining (logic above subtracts capacity)
         if (remaining < 0) remaining = 0;
     }
 
-    // Consolidate identical boxes
+    // Consolidate identical boxes for display
     const consolidated = [];
     boxes.forEach(b => {
         const existing = consolidated.find(c => c.type === b.type);
         if (existing) existing.count++;
-        else consolidated.push({ ...b });
+        else consolidated.push({ type: b.type, color: b.color, count: 1 });
     });
 
-    return consolidated;
+    return { consolidated: consolidated, details: boxes };
 }
 
 function renderStores() {
@@ -188,7 +157,7 @@ function renderStores() {
         const boxInfo = getBoxInfo(qty);
         let boxHtml = '';
         let totalBoxes = 0;
-        boxInfo.forEach(b => {
+        boxInfo.consolidated.forEach(b => {
             boxHtml += `<div class="box-badge ${b.color}">${b.type} x${b.count}</div>`;
             totalBoxes += b.count;
         });
@@ -228,6 +197,11 @@ function renderChecklist() {
     STORES.forEach(store => {
         if (currentQuantities[store] === undefined) return;
 
+        const qty = currentQuantities[store];
+        const boxInfo = getBoxInfo(qty);
+        const totalBoxes = boxInfo.details.length;
+        const breakdown = boxInfo.details.map(b => b.amount).join('+');
+
         const item = document.createElement('div');
         item.className = 'checklist-item';
         item.onclick = function () {
@@ -237,7 +211,7 @@ function renderChecklist() {
 
         item.innerHTML = `
             <div class="checkbox"></div>
-            <div>${store}: 最終確認 (箱数・個数)</div>
+            <div>${store}: ${totalBoxes}箱 ${breakdown}</div>
         `;
         container.appendChild(item);
     });
