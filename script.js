@@ -6,12 +6,12 @@ const DATA = {
     sunday_small: {
         title: "日曜日出荷 小粒",
         is_calc_required: true,
-        others_fixed: { '東': 70, '豊川': 90, '高師': 70, '魚町': 50 } // Sum = 280
+        others_fixed: { '東': 70, '豊川': 90, '高師': 70, '魚町': 20 } // Sum = 250
     },
     sunday_fuku: {
         title: "日曜日出荷 フクユタカ",
         is_calc_required: false,
-        fixed: { '蒲郡': 97, '東': 90, '豊川': 60, '高師': 80, '魚町': 50 }
+        fixed: { '蒲郡': 126, '東': 80, '豊川': 100, '高師': 60, '魚町': 20 }
     },
     weekday_small: {
         title: "平日出荷 小粒",
