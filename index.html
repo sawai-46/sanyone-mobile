@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#007bff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>サンヨネ店舗別出荷計算</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>サンヨネ出荷計算</h1>
+
+        <!-- Main Menu -->
+        <div id="menu" class="menu-grid">
+            <button onclick="selectMode('sunday_small')" class="menu-btn sunday">日曜日 小粒</button>
+            <button onclick="selectMode('sunday_fuku')" class="menu-btn sunday">日曜日 フクユタカ</button>
+            <button onclick="selectMode('weekday_small')" class="menu-btn weekday">平日 小粒</button>
+            <button onclick="selectMode('weekday_fuku')" class="menu-btn weekday">平日 フクユタカ</button>
+        </div>
+
+        <!-- App View (Hidden by default) -->
+        <div id="app-view" class="hidden">
+            <button onclick="showMenu()" class="back-btn">← メニューに戻る</button>
+            <h2 id="current-mode-title"></h2>
+
+            <!-- Total Input (Only for Sunday Small) -->
+            <div id="total-input-section" class="hidden">
+                <label for="total-qty">全体の個数:</label>
+                <input
+                    type="number"
+                    id="total-qty"
+                    placeholder="個数を入力"
+                    inputmode="numeric"
+                    enterkeyhint="done"
+                    oninput="calculate()"
+                >
+            </div>
+
+            <!-- Store List -->
+            <div id="store-list" class="store-list">
+                <!-- Stores will be populated here -->
+            </div>
+
+            <!-- Checklist Section -->
+            <div class="checklist-section">
+                <h3>チェックリスト</h3>
+                <div id="checklist" class="checklist">
+                    <!-- Checklist items will be populated here -->
+                </div>
+            </div>
+
+            <!-- Mission Clear Message -->
+            <div id="mission-clear" class="hidden">
+                <div class="mission-content">
+                    MISSION CLEAR!
+                    <br>
+                    <span style="font-size: 0.5em;">お疲れ様でした！</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Label Template (Hidden) -->
+    <template id="label-template">
+        <div class="label-preview">
+            <div class="box-info">
+                <span class="box-type"></span>
+                <span class="box-count"></span>
+            </div>
+            <div class="label-icons">
+                <div class="label-icon store">店名 x3</div>
+                <div class="label-icon product">品名 x1</div>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch((err) => {
+                    console.warn('Service Worker registration failed:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

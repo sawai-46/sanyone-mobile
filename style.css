@@ -1,0 +1,326 @@
+:root {
+    --primary-color: #007bff;
+    --sunday-color: #ff6b6b;
+    --weekday-color: #4ecdc4;
+    --bg-color: #f4f4f9;
+    --text-color: #333;
+    --card-bg: #fff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: clamp(12px, 4vw, 32px);
+    padding-top: calc(clamp(12px, 4vw, 32px) + env(safe-area-inset-top, 0px));
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.container {
+    width: min(680px, 100%);
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+}
+
+/* Menu */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.menu-btn {
+    padding: clamp(18px, 5vw, 32px) 12px;
+    font-size: clamp(1rem, 3.5vw, 1.3rem);
+    border: none;
+    border-radius: 18px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    touch-action: manipulation;
+}
+
+.menu-btn:active {
+    transform: scale(0.98);
+}
+
+.sunday {
+    background-color: var(--sunday-color);
+}
+
+.weekday {
+    background-color: var(--weekday-color);
+}
+
+/* App View */
+.hidden {
+    display: none !important;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 4px 0;
+    touch-action: manipulation;
+}
+
+#total-input-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+#total-input-section label {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#total-qty {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Store List */
+.store-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.store-card {
+    background: var(--card-bg);
+    padding: clamp(14px, 3vw, 20px);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.store-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.store-name {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+    font-weight: bold;
+}
+
+.store-qty {
+    font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.gamagori-breakdown {
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: 10px;
+}
+
+/* Box Info */
+.box-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.box-info-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.box-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.box-purple {
+    background-color: #9b59b6;
+}
+
+/* Purple */
+.box-pink {
+    background-color: #ff9ff3;
+    color: #333;
+}
+
+/* Pink */
+.box-onetouch {
+    background-color: #2ecc71;
+}
+
+/* Green/OneTouch */
+
+.sticker-info {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px dashed #eee;
+}
+
+.sticker-badge {
+    font-size: 0.85rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.store-sticker {
+    border-left: 3px solid #3498db;
+}
+
+.product-sticker {
+    border-left: 3px solid #e67e22;
+}
+
+/* Checklist */
+.checklist-section {
+    margin-top: 30px;
+}
+
+.checklist-item {
+    background: var(--card-bg);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 2px solid transparent;
+}
+
+.checklist-item.checked {
+    background: #e8f5e9;
+    border-color: #4caf50;
+    opacity: 0.7;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checklist-item.checked .checkbox {
+    background: #4caf50;
+    border-color: #4caf50;
+}
+
+.checklist-item.checked .checkbox::after {
+    content: '✓';
+    color: white;
+    font-weight: bold;
+}
+
+/* Mission Clear */
+#mission-clear {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s;
+}
+
+.mission-content {
+    color: #f1c40f;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(241, 196, 15, 0.5);
+    transform: scale(0);
+    animation: popIn 0.5s 0.2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding-left: clamp(10px, 3vw, 20px);
+        padding-right: clamp(10px, 3vw, 20px);
+    }
+
+    .store-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .sticker-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .checklist-item {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
