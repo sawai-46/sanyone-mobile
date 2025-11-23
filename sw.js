@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sanyone-cache-v3';
+const CACHE_NAME = 'sanyone-cache-v4';
 const OFFLINE_ASSETS = [
     './',
     './index.html',

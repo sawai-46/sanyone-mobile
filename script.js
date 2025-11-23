@@ -10,18 +10,18 @@ const DATA = {
     },
     sunday_fuku: {
         title: "日曜日出荷 フクユタカ",
-        is_calc_required: false,
-        fixed: { '蒲郡': 126, '東': 80, '豊川': 100, '高師': 60, '魚町': 20 }
+        is_calc_required: true,
+        others_fixed: { '東': 80, '豊川': 100, '高師': 60, '魚町': 20 } // Sum = 260
     },
     weekday_small: {
         title: "平日出荷 小粒",
-        is_calc_required: false,
-        fixed: { '蒲郡': 139, '東': 60, '豊川': 90, '高師': 60, '魚町': 40 }
+        is_calc_required: true,
+        others_fixed: { '東': 60, '豊川': 90, '高師': 60, '魚町': 40 } // Sum = 250
     },
     weekday_fuku: {
         title: "平日出荷 フクユタカ",
-        is_calc_required: false,
-        fixed: { '蒲郡': 97, '東': 90, '豊川': 60, '高師': 80, '魚町': 50 }
+        is_calc_required: true,
+        others_fixed: { '東': 90, '豊川': 60, '高師': 80, '魚町': 50 } // Sum = 280
     }
 };
 
